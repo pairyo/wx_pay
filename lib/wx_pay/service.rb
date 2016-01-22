@@ -10,7 +10,7 @@ module WxPay
       params = {
         appid: options.delete(:appid) || WxPay.appid,
         mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        nonce_str: params[:nonce_str] || SecureRandom.uuid.tr('-', '')
+        nonce_str: SecureRandom.uuid.tr('-', '')
       }.merge(params)
 
       check_required_options(params, INVOKE_UNIFIEDORDER_REQUIRED_FIELDS)
@@ -175,6 +175,7 @@ module WxPay
             headers: { content_type: 'application/xml' }
           }.merge(options)
         )
+
 
         if r
           WxPay::Result.new(Hash.from_xml(r))
