@@ -10,7 +10,7 @@ module WxPay
       params = {
         appid: options.delete(:appid) || WxPay.appid,
         mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        nonce_str: SecureRandom.uuid.tr('-', '')
+        nonce_str: params[:nonce_str] || SecureRandom.uuid.tr('-', '')
       }.merge(params)
 
       check_required_options(params, INVOKE_UNIFIEDORDER_REQUIRED_FIELDS)
@@ -28,7 +28,7 @@ module WxPay
         appid: options.delete(:appid) || WxPay.appid,
         partnerid: options.delete(:mch_id) || WxPay.mch_id,
         package: 'Sign=WXPay',
-        timestamp: Time.now.to_i.to_s
+        timestamp: params[:timestamp] || Time.now.to_i.to_s
       }.merge(params)
 
       check_required_options(params, GENERATE_APP_PAY_REQ_REQUIRED_FIELDS)
